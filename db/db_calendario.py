@@ -14,8 +14,7 @@ class DBJogos:
 		self.jogos = self.db.jogos
 
 	def save(self, jogo):
-		pprint.pprint(jogo)
-		self.jogos.insert_many(jogo)
+		self.jogos.insert_one(jogo)
 
 	def close(self):
 		self.client.close()
