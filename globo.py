@@ -3,7 +3,6 @@ from urllib import request
 
 proxy = request.ProxyHandler({'http': 'proxy.goias.gov.br:2303'})
 opener = request.build_opener(proxy)
-opener = request.build_opener(proxy)
 
 
 html = request.urlopen("http://globoesporte.globo.com/sp/futebol/campeonato-paulista/")

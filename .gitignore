@@ -1,3 +1,4 @@
 *.html
 db/*.html
+db/*.json
 __pycache__/

@@ -4,11 +4,7 @@ import os
 
 from db import db_calendario
 
-def __ajustar_proxy():
-	if('w_proxy' in os.environ and 'w_proxy_port' in os.environ):
-		proxy_str = ('%s:%s' %(os.environ.get('w_proxy'), os.environ.get('w_proxy_port')) )
-		proxy = request.ProxyHandler({'http': proxy_str})
-		opener = request.build_opener(proxy)
+from util import tipos, c_request
 
 def __escrever_no_arquivo(arquivo, jogo):
 	arquivo.write(str(jogo))
@@ -40,24 +36,26 @@ def preencher_info_estadio(jogo_info, jogo):
 	jogo['info'] = str(info.text).replace(estadio, '')
 	jogo['estadio'] = estadio
 
-def __executar(url, arquivo_nome):
+def __executar(url, arquivo_nome, tipo_campeonato):
 	num_rodada = 1
 	fo = open(arquivo_nome, "w")
 	db = db_calendario.DBJogos()
 	while 1:
-		html = request.urlopen("http://globoesporte.globo.com/servico/esportes_campeonato/responsivo/widget-uuid/%s"%(str(url).format(num_rodada)))
-		soup = BeautifulSoup(html, 'html.parser')
+		soup = c_request.get_html("http://globoesporte.globo.com/servico/esportes_campeonato/responsivo/widget-uuid/%s"%(str(url).format(num_rodada)))
 		jogos_info = soup.find_all('li', class_='lista-de-jogos-item')
 
 		if(not jogos_info):
 			fo.close()
-			print("FIM")
+			#print("FIM")
+			db.close()
 			return
 
 		fo.write(" -------------- RODADA DE Nº %i --------------"%num_rodada)
 		fo.write('\n')
 		for jogo_info in jogos_info:
 			jogo = {}
+			jogo['rodada'] = num_rodada
+			jogo['tipo'] = tipo_campeonato.value
 			preencher_info_estadio(jogo_info, jogo)
 
 			meta = jogo_info.find(itemprop="startDate")
@@ -67,14 +65,13 @@ def __executar(url, arquivo_nome):
 				mandante = __montar_info_equipe(equipes, 'mandante', jogo)
 				visitante = __montar_info_equipe(equipes, 'visitante', jogo)
 				
-				#__escrever_no_arquivo(fo, jogo)
-				__escrever_no_banco(db, jogo)
+				__escrever_no_arquivo(fo, jogo)
+				#__escrever_no_banco(db, jogo)
 		num_rodada+=1
 
 def executar():
-	__ajustar_proxy()
-	__executar("2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/rodada/{0}/jogos.html", "db/calendario-paulista.html")
-	"""__executar("2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/grupo/2057/rodada/{0}/jogos.html", "db/calendario-carioca.html")
-	__executar("7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/rodada/{0}/jogos.html", "db/calendario-goiano.html")"""
+	__executar("2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/rodada/{0}/jogos.html", "db/calendario-paulista.json", tipos.TipoCampeonato.PAULISTA)
+	__executar("2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/grupo/2057/rodada/{0}/jogos.html", "db/calendario-carioca.json", tipos.TipoCampeonato.CARIOCA)
+	__executar("7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/rodada/{0}/jogos.html", "db/calendario-goiano.json", tipos.TipoCampeonato.GOIANO)
 
-executar()
+executar()	
