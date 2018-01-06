@@ -1,4 +1,5 @@
 *.html
-db/*.html
-db/*.json
+app/db/*.html
+app/db/*.json
 __pycache__/
+ENV/
