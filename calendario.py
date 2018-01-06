@@ -65,8 +65,8 @@ def __executar(url, arquivo_nome, tipo_campeonato):
 				mandante = __montar_info_equipe(equipes, 'mandante', jogo)
 				visitante = __montar_info_equipe(equipes, 'visitante', jogo)
 				
-				__escrever_no_arquivo(fo, jogo)
-				#__escrever_no_banco(db, jogo)
+				#__escrever_no_arquivo(fo, jogo)
+				__escrever_no_banco(db, jogo)
 		num_rodada+=1
 
 def executar():

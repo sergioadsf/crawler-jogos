@@ -2,7 +2,7 @@ import pymongo
 from pymongo import MongoClient
 import os
 
-class DBJogos:
+class DBClassificacao:
 	
 	def __init__(self):
 		self.__conect()
@@ -19,10 +19,10 @@ class DBJogos:
 		self.__build_client()
 		self.db = self.client.campeonato
 		#self.collection = self.db.jogos
-		self.jogos = self.db.jogos
+		self.classificacao = self.db.classificacao
 
-	def save(self, jogo):
-		self.jogos.insert_one(jogo)
+	def save(self, classificacao):
+		self.classificacao.insert_one(classificacao)
 
 	def close(self):
 		self.client.close()
