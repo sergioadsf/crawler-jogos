@@ -6,6 +6,7 @@ class DBClassificacao:
 	
 	def __init__(self):
 		self.__conect()
+		self.drop_collection()
 
 	def __build_client(self):
 		if('mongo_user' in os.environ):
@@ -23,6 +24,12 @@ class DBClassificacao:
 
 	def save(self, classificacao):
 		self.classificacao.insert_one(classificacao)
+
+	def save_all(self, lista_classificacao):
+		self.classificacao.insert_many(lista_classificacao)
+
+	def drop_collection(self):
+		self.classificacao.drop()
 
 	def close(self):
 		self.client.close()

@@ -1,17 +1,12 @@
-import schedule
-import time
+from app import scheduler
 
-import classificacao
-import calendario
+from app import classificacao, calendario
 
 def schedule_job():
 	classificacao.executar()
 	calendario.executar()
 
 def main():
-	schedule.every(2).minutes.do(schedule_job)
-	while True:
-		schedule.run_pending()
-		time.sleep(1)
-
-main()
+	schedule_job()
+	scheduler.add_job(schedule_job, 'interval', minutes=2)
+	scheduler.start()

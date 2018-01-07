@@ -5,6 +5,7 @@ class DBJogos:
 	
 	def __init__(self):
 		self.__conect()
+		self.drop_collection()
 
 	def __build_client(self):
 		if('mongo_user' in os.environ):
@@ -23,11 +24,17 @@ class DBJogos:
 	def save(self, jogo):
 		self.jogos.insert_one(jogo)
 
+	def save_all(self, lista_jogos):
+		self.jogos.insert_many(lista_jogos)
+
 	def find_all(self):
 		return self.jogos.find()
 
 	def find(self, filter):
 		return self.jogos.find(filter)
+	
+	def drop_collection(self):
+		self.jogos.drop()
 
 	def close(self):
 		self.client.close()

@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup
 from urllib import request
 
-from util import c_request, tipos
-from db import db_classificacao
+from app import app
+from app.util import c_request, tipos
+from app.db import db_classificacao
 
 def __escrever_no_arquivo(arquivo, classificacao):
 	arquivo.write(str(classificacao))
@@ -10,6 +11,9 @@ def __escrever_no_arquivo(arquivo, classificacao):
 
 def __escrever_no_banco(db, classificacao):
 	db.save(classificacao)
+
+def __escrever_lista_no_banco(db, lista_classificacao):
+	db.save_all(lista_classificacao)
 
 def __preencher_pontuacao(linha, pos, classificacao):
 	pontos = linha[pos].find_all('td')
@@ -42,11 +46,11 @@ def __preencher_grupo(grupo, classificacao):
 def __qtd_times(linha):
 	return range(0, len(linha))
 
-def __executar(url_site, url_arquivo, tipo_campeonato):
-	soup = c_request.get_html(url_site)
+def __executar(db, url_site, url_arquivo, tipo_campeonato):
+	soup = c_request.get_html("http://globoesporte.globo.com/servico/esportes_campeonato/responsivo/widget-uuid/%s" %url_site)
 	fo = open(url_arquivo, "w")
-	db = db_classificacao.DBClassificacao()
 
+	lista_classificacao = []
 	pos_grupo = 0
 	for grupo in soup.find_all('section', class_="section-container"):
 		tab_time = grupo.find('table', class_="tabela-times")
@@ -62,17 +66,21 @@ def __executar(url_site, url_arquivo, tipo_campeonato):
 			__preencher_pontuacao(linha_pontos, pos_time, classificacao)
 
 			#__escrever_no_arquivo(fo, classificacao)
-			__escrever_no_banco(db, classificacao)
+			#__escrever_no_banco(db, classificacao)
+			lista_classificacao.append(classificacao)
+
 		pos_grupo += 1
 
+	__escrever_lista_no_banco(db, lista_classificacao)
 	fo.close()
-	db.close()
 
 def executar():
 	print("Let's run classificacao")
-	__executar("http://globoesporte.globo.com/servico/esportes_campeonato/responsivo/widget-uuid/2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/classificacao.html", "app/db/classificacao_paulista.json", tipos.TipoCampeonato.PAULISTA)
-	__executar("http://globoesporte.globo.com/servico/esportes_campeonato/responsivo/widget-uuid/2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/classificacao.html", "app/db/classificacao_carioca.json", tipos.TipoCampeonato.CARIOCA)
-	__executar("http://globoesporte.globo.com/servico/esportes_campeonato/responsivo/widget-uuid/7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/classificacao.html", "app/db/classificacao_goiano.json", tipos.TipoCampeonato.GOIANO)
+	db = db_classificacao.DBClassificacao()
+	__executar(db, "2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/classificacao.html", "app/db/classificacao_paulista.json", tipos.TipoCampeonato.PAULISTA)
+	__executar(db, "2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/classificacao.html", "app/db/classificacao_carioca.json", tipos.TipoCampeonato.CARIOCA)
+	__executar(db, "7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/classificacao.html", "app/db/classificacao_goiano.json", tipos.TipoCampeonato.GOIANO)
+	db.close()
 	print("we finished run classificacao")
 
-executar()
+#executar()

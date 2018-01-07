@@ -1,0 +1,29 @@
+Exemplo endpoint retorna a classificação por rodada
+In this example the specification is taken from external YAML file
+---
+parameters:
+  - name: body
+    in: body
+    schema:
+      required: 
+        - tipo
+      properties:
+        tipo:
+          type: string
+          default: 1
+        rodada:
+          type: string
+          default: 1
+definitions:
+  Resposta:
+    type: object
+    properties:
+      tipo:
+        type: string
+      rodada:
+        type: string
+responses:
+  200:
+    description: A Classificação por campeonato
+    schema:
+      $ref: '#/definitions/Resposta'
