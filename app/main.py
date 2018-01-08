@@ -8,5 +8,5 @@ def schedule_job():
 
 def main():
 	schedule_job()
-	scheduler.add_job(schedule_job, 'interval', minutes=25)
-	#scheduler.start()
+	scheduler.add_job(schedule_job, 'interval', hours=6)
+	scheduler.start()
