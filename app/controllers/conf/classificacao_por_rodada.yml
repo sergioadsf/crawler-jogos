@@ -6,9 +6,9 @@ parameters:
     in: body
     schema:
       required: 
-        - tipo
+        - campeonato
       properties:
-        tipo:
+        campeonato:
           type: string
           default: 1
         rodada:
@@ -18,7 +18,7 @@ definitions:
   Resposta:
     type: object
     properties:
-      tipo:
+      campeonato:
         type: string
       rodada:
         type: string

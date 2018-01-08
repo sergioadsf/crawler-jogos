@@ -1,5 +1,6 @@
 from flask_script import Manager
 from flask import Flask
+from flasgger import Swagger
 from apscheduler.schedulers.background import BackgroundScheduler
 
 import os
@@ -7,6 +8,7 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 manager = Manager(app)
+swagger = Swagger(app)
 scheduler = BackgroundScheduler()
 
 if('mongo_user' in os.environ):
@@ -16,4 +18,4 @@ else:
 	print('no')
 	client = MongoClient('localhost', 27017)
 
-from app.controllers import classificacao_controller
+from app.controllers import  calendario_controller, classificacao_controller

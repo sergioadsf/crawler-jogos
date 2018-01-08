@@ -30,9 +30,9 @@ def __preencher_pontuacao(linha, pos, classificacao):
 def __preencher_times(linha, pos, classificacao):
 	time = linha[pos].find('td', class_="tabela-times-time")
 	time_link = time.find('a', class_="tabela-times-time-link")
-	classificacao['link'] = time_link['href']
-	classificacao['time_nome'] = time_link['title']
-	classificacao['alias'] = time_link.find('span', class_="tabela-times-time-sigla").text
+	classificacao['link'] = time_link['href'] if (time_link) else ""
+	classificacao['time_nome'] = time.find('strong', class_="tabela-times-time-nome").text
+	classificacao['alias'] = time.find('span', class_="tabela-times-time-sigla").text
 	classificacao['variacao'] = float(linha[pos].find('td', class_="tabela-times-variacao").text)
 
 def __preencher_posicao(linha, pos, classificacao):
@@ -46,11 +46,10 @@ def __preencher_grupo(grupo, classificacao):
 def __qtd_times(linha):
 	return range(0, len(linha))
 
-def __executar(db, url_site, url_arquivo, tipo_campeonato):
+def __executar(lista_classificacao, url_site, url_arquivo, tipo_campeonato):
 	soup = c_request.get_html("http://globoesporte.globo.com/servico/esportes_campeonato/responsivo/widget-uuid/%s" %url_site)
 	fo = open(url_arquivo, "w")
 
-	lista_classificacao = []
 	pos_grupo = 0
 	for grupo in soup.find_all('section', class_="section-container"):
 		tab_time = grupo.find('table', class_="tabela-times")
@@ -59,7 +58,7 @@ def __executar(db, url_site, url_arquivo, tipo_campeonato):
 		linha_pontos = tab_pontos.find_all('tr', class_="tabela-body-linha")
 		for pos_time in __qtd_times(linha_times):
 			classificacao = {}
-			classificacao['tipo'] = tipo_campeonato.value
+			classificacao['tipo_campeonato'] = tipo_campeonato.value
 			__preencher_grupo(grupo, classificacao)
 			__preencher_posicao(linha_times, pos_time, classificacao)
 			__preencher_times(linha_times, pos_time, classificacao)
@@ -71,15 +70,17 @@ def __executar(db, url_site, url_arquivo, tipo_campeonato):
 
 		pos_grupo += 1
 
-	__escrever_lista_no_banco(db, lista_classificacao)
 	fo.close()
 
 def executar():
 	print("Let's run classificacao")
+	lista_classificacao = []
 	db = db_classificacao.DBClassificacao()
-	__executar(db, "2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/classificacao.html", "app/db/classificacao_paulista.json", tipos.TipoCampeonato.PAULISTA)
-	__executar(db, "2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/classificacao.html", "app/db/classificacao_carioca.json", tipos.TipoCampeonato.CARIOCA)
-	__executar(db, "7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/classificacao.html", "app/db/classificacao_goiano.json", tipos.TipoCampeonato.GOIANO)
+	__executar(lista_classificacao, "2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/classificacao.html", "app/db/classificacao_paulista.json", tipos.TipoCampeonato.PAULISTA)
+	__executar(lista_classificacao, "2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/classificacao.html", "app/db/classificacao_carioca.json", tipos.TipoCampeonato.CARIOCA)
+	__executar(lista_classificacao, "7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/classificacao.html", "app/db/classificacao_goiano.json", tipos.TipoCampeonato.GOIANO)
+	__executar(lista_classificacao, "b5e8f93a-d09f-44aa-84b2-f1f12fadf9ba/fases/fase-de-grupos-libertadores-2018/classificacao.html", "app/db/classificacao_libertadores.json", tipos.TipoCampeonato.LIBERTADORES)
+	__escrever_lista_no_banco(db, lista_classificacao)
 	db.close()
 	print("we finished run classificacao")
 
