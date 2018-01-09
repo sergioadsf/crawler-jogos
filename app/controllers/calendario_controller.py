@@ -16,7 +16,7 @@ def calendario(campeonato):
 	resposta['response'] = resultado
 	print(resultado.count())
 	db.close()
-	return dumps(resultado)
+	return dumps(resposta)
 
 @app.route('/calendario/rodada', methods=['POST'])
 @swag_from('conf/calendario_por_rodada.yml')
@@ -29,4 +29,4 @@ def calendario_por_rodada():
 	resposta['response'] = resultado
 	print(resultado.count())
 	db.close()
-	return dumps(resultado)
+	return dumps(resposta)
