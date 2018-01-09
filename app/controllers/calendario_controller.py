@@ -11,6 +11,9 @@ from app.db import db_calendario
 def calendario(campeonato):
 	db = db_calendario.DBJogos()
 	resultado = db.find({'tipo_campeonato': int(campeonato)})
+	resposta = {}
+	resposta['sucesso'] = bol(true)
+	resposta['response'] = resultado
 	print(resultado.count())
 	db.close()
 	return dumps(resultado)
