@@ -12,7 +12,7 @@ def calendario(campeonato):
 	db = db_calendario.DBJogos()
 	resultado = db.find({'tipo_campeonato': int(campeonato)})
 	resposta = {}
-	resposta['sucesso'] = True
+	resposta['success'] = True
 	resposta['response'] = resultado
 	print(resultado.count())
 	db.close()
@@ -24,7 +24,7 @@ def calendario_por_rodada():
 	data = request.json
 	db = db_calendario.DBJogos()
 	resposta = {}
-	resposta['sucesso'] = True
+	resposta['success'] = True
 	resultado = db.find({'tipo_campeonato': int(data['campeonato']), 'rodada': int(data['rodada'])})
 	resposta['response'] = resultado
 	print(resultado.count())
