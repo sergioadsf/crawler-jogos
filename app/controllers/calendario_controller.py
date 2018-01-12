@@ -14,7 +14,6 @@ def calendario(campeonato):
 	resposta = {}
 	resposta['success'] = True
 	resposta['response'] = resultado
-	print(resultado.count())
 	db.close()
 	return dumps(resposta)
 
@@ -27,6 +26,5 @@ def calendario_por_rodada():
 	resposta['success'] = True
 	resultado = db.find({'tipo_campeonato': int(data['campeonato']), 'rodada': int(data['rodada'])})
 	resposta['response'] = resultado
-	print(resultado.count())
 	db.close()
 	return dumps(resposta)

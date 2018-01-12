@@ -10,17 +10,9 @@ from app.db import db_classificacao
 @swag_from('conf/classificacao.yml')
 def classificacao(campeonato):
 	db = db_classificacao.DBClassificacao()
+	resposta = {}
+	resposta['success'] = True
 	resultado = db.find({'tipo_campeonato': int(campeonato)})
-	print(resultado.count())
-	db.close()
-	return dumps(resultado)
-
-@app.route('/classificacao/rodada', methods=['POST'])
-@swag_from('conf/classificacao_por_rodada.yml')
-def classificacao_por_rodada():
-	data = request.json
-	db = db_classificacao.DBClassificacao()
-	#resultado = db.find({'tipo': int(data['tipo']), 'rodada': int(data['rodada'])})
-	#print(resultado.count())
+	resposta['response'] = resultado
 	db.close()
 	return dumps(resultado)
