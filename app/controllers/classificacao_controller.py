@@ -15,4 +15,4 @@ def classificacao(campeonato):
 	resposta['success'] = True
 	resposta['response'] = resultado
 	db.close()
-	return dumps(resultado)
+	return dumps(resposta)
