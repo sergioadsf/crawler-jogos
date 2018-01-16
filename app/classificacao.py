@@ -77,7 +77,7 @@ def executar():
 	lista_classificacao = []
 	db = db_classificacao.DBClassificacao()
 	__executar(lista_classificacao, "2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/classificacao.html", "app/db/classificacao_paulista.json", tipos.TipoCampeonato.PAULISTA)
-	__executar(lista_classificacao, "2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/classificacao.html", "app/db/classificacao_carioca.json", tipos.TipoCampeonato.CARIOCA)
+	__executar(lista_classificacao, "2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/taca-gb-campeonato-carioca-2018/classificacao.html", "app/db/classificacao_carioca.json", tipos.TipoCampeonato.CARIOCA)
 	__executar(lista_classificacao, "7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/classificacao.html", "app/db/classificacao_goiano.json", tipos.TipoCampeonato.GOIANO)
 	__executar(lista_classificacao, "b5e8f93a-d09f-44aa-84b2-f1f12fadf9ba/fases/fase-de-grupos-libertadores-2018/classificacao.html", "app/db/classificacao_libertadores.json", tipos.TipoCampeonato.LIBERTADORES)
 	__escrever_lista_no_banco(db, lista_classificacao)

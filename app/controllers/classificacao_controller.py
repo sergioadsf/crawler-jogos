@@ -16,3 +16,27 @@ def classificacao(campeonato):
 	resposta['response'] = resultado
 	db.close()
 	return dumps(resposta)
+
+@app.route('/classificacao/grupo', methods=['POST'])
+@swag_from('conf/classificacao_por_grupo.yml')
+def classificacao_por_grupo():
+	data = request.json
+	db = db_classificacao.DBClassificacao()
+	resposta = {}
+	resposta['success'] = True
+	resultado = db.find({'$and':[{'tipo_campeonato': int(data['campeonato']), 'grupo': data['grupo']}]})
+	resposta['response'] = resultado
+	db.close()
+	return dumps(resposta)
+
+@app.route('/classificacao/time', methods=['POST'])
+@swag_from('conf/classificacao_time.yml')
+def classificacao_time():
+	data = request.json
+	db = db_classificacao.DBClassificacao()
+	resposta = {}
+	resposta['success'] = True
+	resultado = db.find({'$and':[{'tipo_campeonato': int(data['campeonato']), 'time_nome': data['time'].capitalize()}]})
+	resposta['response'] = resultado
+	db.close()
+	return dumps(resposta)

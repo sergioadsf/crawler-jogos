@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from urllib import request
+from datetime import datetime
 import os
 
 from db import db_calendario
@@ -59,7 +60,7 @@ def __executar(url, arquivo_nome, tipo_campeonato):
 			preencher_info_estadio(jogo_info, jogo)
 
 			meta = jogo_info.find(itemprop="startDate")
-			jogo['data'] = str(meta['content'])
+			jogo['data'] = datetime.strptime(str(meta['content']), '%Y-%m-%d')
 			fo.write('\n')
 			for equipes in jogo_info.find_all('div', class_="placar-jogo-equipes"):
 				mandante = __montar_info_equipe(equipes, 'mandante', jogo)

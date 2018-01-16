@@ -1,0 +1,28 @@
+Exemplo endpoint retorna a classificação por grupo
+In this example the specification is taken from external YAML file
+---
+parameters:
+  - name: body
+    in: body
+    schema:
+      required: 
+        - campeonato
+      properties:
+        campeonato:
+          type: string
+          default: 1
+        grupo:
+          type: string          
+definitions:
+  Resposta:
+    type: object
+    properties:
+      campeonato:
+        type: string
+      rodada:
+        type: string
+responses:
+  200:
+    description: A Classificação por grupo
+    schema:
+      $ref: '#/definitions/Resposta'
