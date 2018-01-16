@@ -72,7 +72,8 @@ def __executar(url, arquivo_nome, tipo_campeonato):
 
 def executar():
 	__executar("2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/rodada/{0}/jogos.html", "db/calendario-paulista.json", tipos.TipoCampeonato.PAULISTA)
-	__executar("2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/grupo/2057/rodada/{0}/jogos.html", "db/calendario-carioca.json", tipos.TipoCampeonato.CARIOCA)
+	__executar("bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/taca-gb-campeonato-carioca-2018/grupo/2058/rodada/{0}/jogos.html", "db/calendario-carioca.json", tipos.TipoCampeonato.CARIOCA)
 	__executar("7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/rodada/{0}/jogos.html", "db/calendario-goiano.json", tipos.TipoCampeonato.GOIANO)
+	__executar("b5e8f93a-d09f-44aa-84b2-f1f12fadf9ba/fases/fase-de-grupos-libertadores-2018/grupo/2122/rodada/{0}/jogos.html", "db/calendario-libertadores.json", tipos.TipoCampeonato.LIBERTADORES)
 
 executar()	
