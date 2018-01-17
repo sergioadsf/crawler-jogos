@@ -1,0 +1,18 @@
+Exemplo endpoint retorna  os grupos por campeonato
+In this example the specification is taken from external YAML file
+---
+parameters:
+  - name: campeonato
+    in: path
+    type: string
+definitions:
+  Resposta:
+    type: object
+    properties:
+      tipo:
+        type: string
+responses:
+  200:
+    description: Grupos por campeonato
+    schema:
+      $ref: '#/definitions/Resposta'

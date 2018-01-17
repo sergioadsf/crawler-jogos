@@ -33,6 +33,9 @@ class DBClassificacao:
 	def find(self, filter):
 		return self.classificacao.find(filter)
 
+	def distinct(self, distinct_field, filter):
+		return self.classificacao.distinct(distinct_field, filter)
+
 	def drop_collection(self):
 		self.classificacao.drop()
 

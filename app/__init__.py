@@ -18,4 +18,4 @@ else:
 	print('no')
 	client = MongoClient('localhost', 27017)
 
-from app.controllers import  calendario_controller, classificacao_controller
+from app.controllers import  calendario_controller, classificacao_controller, grupo_controller
