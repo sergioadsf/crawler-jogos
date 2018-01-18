@@ -1,4 +1,4 @@
-Exemplo endpoint retorna a classificação por rodada
+Exemplo endpoint retorna a classificação de um campeonato por rodada
 In this example the specification is taken from external YAML file
 ---
 parameters:
