@@ -25,7 +25,7 @@ def __preencher_pontuacao(linha, pos, classificacao):
 	classificacao['gols_pro'] = int(pontos[5].text)
 	classificacao['gols_contra'] = int(pontos[6].text)
 	classificacao['saldo_gols'] = int(pontos[7].text)
-	classificacao['perc_ult_jogos'] = float(pontos[8].text)
+	#classificacao['perc_ult_jogos'] = float(pontos[8].text)
 
 def __preencher_times(linha, pos, classificacao):
 	time = linha[pos].find('td', class_="tabela-times-time")
@@ -33,7 +33,7 @@ def __preencher_times(linha, pos, classificacao):
 	#classificacao['link'] = time_link['href'] if (time_link) else ""
 	classificacao['time_nome'] = time.find('strong', class_="tabela-times-time-nome").text
 	classificacao['alias'] = time.find('span', class_="tabela-times-time-sigla").text
-	classificacao['variacao'] = float(linha[pos].find('td', class_="tabela-times-variacao").text)
+	#classificacao['variacao'] = float(linha[pos].find('td', class_="tabela-times-variacao").text)
 
 def __preencher_posicao(linha, pos, classificacao):
 	posicao = linha[pos].find('td', class_="tabela-times-posicao")
