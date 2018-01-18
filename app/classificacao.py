@@ -30,7 +30,7 @@ def __preencher_pontuacao(linha, pos, classificacao):
 def __preencher_times(linha, pos, classificacao):
 	time = linha[pos].find('td', class_="tabela-times-time")
 	time_link = time.find('a', class_="tabela-times-time-link")
-	classificacao['link'] = time_link['href'] if (time_link) else ""
+	#classificacao['link'] = time_link['href'] if (time_link) else ""
 	classificacao['time_nome'] = time.find('strong', class_="tabela-times-time-nome").text
 	classificacao['alias'] = time.find('span', class_="tabela-times-time-sigla").text
 	classificacao['variacao'] = float(linha[pos].find('td', class_="tabela-times-variacao").text)
