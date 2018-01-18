@@ -7,6 +7,5 @@ def schedule_job():
 	calendario.executar()
 
 def main():
-	schedule_job()
 	scheduler.add_job(schedule_job, 'interval', minutes=20)
 	scheduler.start()
