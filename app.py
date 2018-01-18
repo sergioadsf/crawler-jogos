@@ -1,5 +1,6 @@
 #web: gunicorn -b 0.0.0.0:$PORT app:app
 from app import app, main, manager, scheduler
+import os
 
 @manager.command
 def execute():
