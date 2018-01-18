@@ -21,20 +21,20 @@ def __preencher_pontuacao(linha, pos, classificacao):
 	classificacao['gols_pro'] = int(pontos[5].text)
 	classificacao['gols_contra'] = int(pontos[6].text)
 	classificacao['saldo_gols'] = int(pontos[7].text)
-	classificacao['perc_ult_jogos'] = float(pontos[8].text)
+	#classificacao['perc_ult_jogos'] = float(pontos[8].text)
 
 def __preencher_times(linha, pos, classificacao):
 	time = linha[pos].find('td', class_="tabela-times-time")
 	time_link = time.find('a', class_="tabela-times-time-link")
-	classificacao['link'] = time_link['href']
+	#classificacao['link'] = time_link['href']
 	classificacao['time_nome'] = time_link['title']
 	classificacao['alias'] = time_link.find('span', class_="tabela-times-time-sigla").text
-	classificacao['variacao'] = float(linha[pos].find('td', class_="tabela-times-variacao").text)
+	#classificacao['variacao'] = float(linha[pos].find('td', class_="tabela-times-variacao").text)
 
 def __preencher_posicao(linha, pos, classificacao):
 	posicao = linha[pos].find('td', class_="tabela-times-posicao")
 	classificacao['posicao'] = posicao.text
-	classificacao['estilo'] = posicao.get('style')
+	#classificacao['estilo'] = posicao.get('style')
 
 def __preencher_grupo(grupo, classificacao):
 	classificacao['grupo'] = grupo.find('h2', class_="tabela-header-titulo").text
