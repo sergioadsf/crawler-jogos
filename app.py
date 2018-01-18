@@ -11,8 +11,8 @@ def execute():
 
 if(__name__ == '__main__'):
 	#manager.run()
-	main.main()
-	print('subindo')
+	#main.main()
+	#print('subindo')
 	port = int(os.environ.get('PORT', 5000))
 	app.run(host='0.0.0.0', port=port)
-	print('subiu')
+	#print('subiu')
