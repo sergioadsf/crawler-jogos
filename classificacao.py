@@ -20,7 +20,7 @@ def __preencher_pontuacao(linha, pos, classificacao):
 	classificacao['derrotas'] = int(pontos[4].text)
 	classificacao['gols_pro'] = int(pontos[5].text)
 	classificacao['gols_contra'] = int(pontos[6].text)
-	classificacao['saldo_gols'] = int(pontos[7].text)
+	#classificacao['saldo_gols'] = int(pontos[7].text)
 	#classificacao['perc_ult_jogos'] = float(pontos[8].text)
 
 def __preencher_times(linha, pos, classificacao):
