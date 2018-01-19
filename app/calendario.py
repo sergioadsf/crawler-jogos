@@ -53,7 +53,6 @@ def __executar(lista_jogos, url, tipo_campeonato):
 
 			meta = jogo_info.find(itemprop="startDate")
 			jogo['data'] = str(meta['content'])
-			fo.write('\n')
 			for equipes in jogo_info.find_all('div', class_="placar-jogo-equipes"):
 				mandante = __montar_info_equipe(equipes, 'mandante', jogo)
 				visitante = __montar_info_equipe(equipes, 'visitante', jogo)
