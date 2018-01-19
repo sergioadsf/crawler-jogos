@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request
 from flasgger import Swagger, swag_from
 
 from bson.json_util import dumps
@@ -14,10 +14,8 @@ def classificacao(campeonato):
 	resposta = {}
 	resposta['success'] = True
 	resposta['response'] = resultado
-	resp = make_response(dumps(resposta), 200)
-	resp.headers.extend({'content-type': 'application/json'})
 	db.close()
-	return resp
+	return dumps(resposta)
 
 @app.route('/classificacao/grupo', methods=['POST'])
 @swag_from('conf/classificacao_por_grupo.yml')
