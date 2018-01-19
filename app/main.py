@@ -3,6 +3,7 @@ from app import scheduler
 from app import classificacao, calendario
 
 def schedule_job():
+	print("Vamos executar o job!")
 	classificacao.executar()
 	calendario.executar()
 
