@@ -34,7 +34,7 @@ def __preencher_times(linha, pos, classificacao):
 def __preencher_posicao(linha, pos, classificacao):
 	posicao = linha[pos].find('td', class_="tabela-times-posicao")
 	classificacao['posicao'] = posicao.text
-	#classificacao['estilo'] = posicao.get('style')
+	classificacao['estilo'] = posicao.get('style')
 
 def __preencher_grupo(grupo, classificacao):
 	classificacao['grupo'] = grupo.find('h2', class_="tabela-header-titulo").text
