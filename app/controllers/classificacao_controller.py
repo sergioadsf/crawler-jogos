@@ -14,7 +14,7 @@ def classificacao(campeonato):
 	resposta = {}
 	resposta['success'] = True
 	resposta['response'] = resultado
-	resp = make_response(dumps(resposta), code)
+	resp = make_response(dumps(resposta), 200)
 	resp.headers.extend({'content-type': 'application/json'})
 	db.close()
 	return resp
