@@ -6,11 +6,6 @@ from app import app
 from app.db import db_calendario
 from app.util import tipos, c_request
 
-def __escrever_no_arquivo(arquivo, jogo):
-	arquivo.write(str(jogo))
-	arquivo.write('\n')
-	arquivo.write('\n')
-
 def __escrever_no_banco(db, jogo):
 	db.save(jogo)
 
@@ -39,21 +34,17 @@ def preencher_info_estadio(jogo_info, jogo):
 	jogo['info'] = str(info.text).replace(estadio, '')
 	jogo['estadio'] = estadio
 
-def __executar(lista_jogos, url, arquivo_nome, tipo_campeonato):
+def __executar(lista_jogos, url, tipo_campeonato):
 	num_rodada = 1
-	fo = open(arquivo_nome, "w")
 	
 	while 1:
 		soup = c_request.get_html("http://globoesporte.globo.com/servico/esportes_campeonato/responsivo/widget-uuid/%s"%(str(url).format(num_rodada)))
 		jogos_info = soup.find_all('li', class_='lista-de-jogos-item')
 
 		if(not jogos_info):
-			fo.close()
 			#print("FIM")
 			return
 
-		fo.write(" -------------- RODADA DE Nº %i --------------"%num_rodada)
-		fo.write('\n')
 		for jogo_info in jogos_info:
 			jogo = {}
 			jogo['rodada'] = num_rodada
@@ -67,7 +58,6 @@ def __executar(lista_jogos, url, arquivo_nome, tipo_campeonato):
 				mandante = __montar_info_equipe(equipes, 'mandante', jogo)
 				visitante = __montar_info_equipe(equipes, 'visitante', jogo)
 				
-				#__escrever_no_arquivo(fo, jogo)
 				#__escrever_no_banco(db, jogo)
 				lista_jogos.append(jogo)
 		num_rodada+=1
@@ -77,10 +67,10 @@ def executar():
 	print("Let's run calendario")
 	db = db_calendario.DBJogos()
 	lista_jogos = []
-	__executar(lista_jogos, "2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/rodada/{0}/jogos.html", "app/db/calendario-paulista.json", tipos.TipoCampeonato.PAULISTA)
-	__executar(lista_jogos, "2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/grupo/2057/rodada/{0}/jogos.html", "app/db/calendario-carioca.json", tipos.TipoCampeonato.CARIOCA)
-	__executar(lista_jogos, "7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/rodada/{0}/jogos.html", "app/db/calendario-goiano.json", tipos.TipoCampeonato.GOIANO)
-	__executar(lista_jogos, "b5e8f93a-d09f-44aa-84b2-f1f12fadf9ba/fases/fase-de-grupos-libertadores-2018/grupo/2122/rodada/{0}/jogos.html", "app/db/calendario-libertadores.json", tipos.TipoCampeonato.LIBERTADORES)
+	__executar(lista_jogos, "2776d78a-38ac-4982-85b1-2389ff26f468/fases/primeira-fase-campeonato-paulista-2018/rodada/{0}/jogos.html", tipos.TipoCampeonato.PAULISTA)
+	__executar(lista_jogos, "2bcee051-4e56-4ef5-94a4-e0a475ba56dd/fases/primeira-fase-campeonato-carioca-2018/grupo/2057/rodada/{0}/jogos.html", tipos.TipoCampeonato.CARIOCA)
+	__executar(lista_jogos, "7f944f5c-e0b4-4c78-b0c1-54cb3c2e9c22/fases/primeira-fase-goiano-2017/rodada/{0}/jogos.html", tipos.TipoCampeonato.GOIANO)
+	__executar(lista_jogos, "b5e8f93a-d09f-44aa-84b2-f1f12fadf9ba/fases/fase-de-grupos-libertadores-2018/grupo/2122/rodada/{0}/jogos.html", tipos.TipoCampeonato.LIBERTADORES)
 	print("we finished run calendario")
 	__escrever_lista_no_banco(db, lista_jogos)
 	db.close()
