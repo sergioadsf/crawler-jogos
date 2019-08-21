@@ -17,4 +17,4 @@ request==0.0.22
 schedule==0.5.0
 six==1.11.0
 tzlocal==1.5.1
-Werkzeug==0.14.1
+Werkzeug==0.15.3
